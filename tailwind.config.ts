@@ -151,5 +151,11 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function({ addVariant }) {
+      // Add synthwave variant
+      addVariant('synthwave', '.synthwave &')
+    }
+  ],
 } satisfies Config;

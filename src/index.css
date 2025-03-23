@@ -105,7 +105,7 @@
   }
   
   .glass-panel-synthwave {
-    @apply synthwave:bg-background/20 synthwave:backdrop-blur-lg synthwave:border-primary/20;
+    @apply bg-background/20 backdrop-blur-lg border-primary/20 synthwave:bg-background/20 synthwave:backdrop-blur-lg synthwave:border-primary/20;
   }
   
   .text-balance {
@@ -121,7 +121,7 @@
   }
   
   .synthwave-glow {
-    @apply synthwave:text-primary synthwave:drop-shadow-[0_0_10px_hsl(var(--primary))];
+    @apply text-primary drop-shadow-[0_0_10px_hsl(var(--primary))] synthwave:text-primary synthwave:drop-shadow-[0_0_10px_hsl(var(--primary))];
   }
   
   .section-container {
