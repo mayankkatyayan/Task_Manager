@@ -10,7 +10,8 @@ import {
   completeTask,
   setFilter,
   setSort,
-  reorderTasks
+  reorderTasks,
+  moveTaskBetweenColumns
 } from '../redux/tasksSlice';
 import { Task, TaskPriority, TaskStatus } from '../types/task';
 
@@ -63,6 +64,24 @@ export const useTaskManagement = () => {
     dispatch(reorderTasks({ source: sourceIndex, destination: destinationIndex }));
   }, [dispatch]);
   
+  const moveTaskToColumn = useCallback((taskId: string, sourceDroppableId: string, sourceIndex: number, 
+    destinationDroppableId: string, destinationIndex: number) => {
+    // Extract the status from the droppable ID (e.g., 'todo', 'in-progress', 'completed')
+    const newStatus = destinationDroppableId as TaskStatus;
+    
+    dispatch(moveTaskBetweenColumns({
+      taskId,
+      sourceIndex,
+      destinationIndex,
+      newStatus
+    }));
+  }, [dispatch]);
+  
+  // Organize tasks by status for kanban view
+  const todoTasks = tasks.filter(task => task.status === 'todo');
+  const inProgressTasks = tasks.filter(task => task.status === 'in-progress');
+  const completedTasks = tasks.filter(task => task.status === 'completed');
+  
   // Filter and sort tasks
   const filteredAndSortedTasks = tasks
     .filter(task => {
@@ -90,6 +109,9 @@ export const useTaskManagement = () => {
   
   return {
     tasks: filteredAndSortedTasks,
+    todoTasks,
+    inProgressTasks,
+    completedTasks,
     filter,
     sort,
     createTask,
@@ -99,5 +121,6 @@ export const useTaskManagement = () => {
     updateFilter,
     updateSort,
     moveTask,
+    moveTaskToColumn,
   };
 };

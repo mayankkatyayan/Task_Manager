@@ -12,13 +12,30 @@ import { PlusIcon } from 'lucide-react';
 const TaskManagementApp = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const { tasks, moveTask, markTaskComplete } = useTaskManagement();
+  const { todoTasks, inProgressTasks, completedTasks, moveTask, moveTaskToColumn } = useTaskManagement();
 
   const handleDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
+    const { source, destination, draggableId } = result;
     
-    // Handle moving task within the list
-    moveTask(result.source.index, result.destination.index);
+    // Dropped outside the list
+    if (!destination) return;
+    
+    // If the task was dropped within the same column
+    if (source.droppableId === destination.droppableId) {
+      // Handle reordering within the same status column
+      // This is a simplified version as we're not actually reordering within status groups
+      // in our current state management approach
+      return;
+    } 
+    
+    // Task moved to a different column
+    moveTaskToColumn(
+      draggableId,
+      source.droppableId,
+      source.index,
+      destination.droppableId,
+      destination.index
+    );
   };
 
   const handleEditTask = (task: Task) => {
@@ -47,7 +64,26 @@ const TaskManagementApp = () => {
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <TaskList tasks={tasks} onEditTask={handleEditTask} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <TaskList 
+            tasks={todoTasks} 
+            onEditTask={handleEditTask} 
+            droppableId="todo" 
+            title="To Do" 
+          />
+          <TaskList 
+            tasks={inProgressTasks} 
+            onEditTask={handleEditTask} 
+            droppableId="in-progress" 
+            title="In Progress" 
+          />
+          <TaskList 
+            tasks={completedTasks} 
+            onEditTask={handleEditTask} 
+            droppableId="completed" 
+            title="Completed" 
+          />
+        </div>
       </DragDropContext>
 
       {isFormOpen && (

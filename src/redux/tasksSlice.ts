@@ -54,6 +54,30 @@ const tasksSlice = createSlice({
       state.tasks.splice(destination, 0, removed);
       saveTasks(state.tasks);
     },
+    moveTaskBetweenColumns: (state, action: PayloadAction<{ 
+      taskId: string;
+      sourceIndex: number;
+      destinationIndex: number;
+      newStatus: 'todo' | 'in-progress' | 'completed';
+    }>) => {
+      const { taskId, newStatus } = action.payload;
+      const taskIndex = state.tasks.findIndex(task => task.id === taskId);
+      
+      if (taskIndex !== -1) {
+        // Update the task status
+        state.tasks[taskIndex].status = newStatus;
+        
+        // If marked as completed, set completedAt date
+        if (newStatus === 'completed') {
+          state.tasks[taskIndex].completedAt = new Date().toISOString();
+        } else {
+          // If moved from completed to another status
+          state.tasks[taskIndex].completedAt = null;
+        }
+        
+        saveTasks(state.tasks);
+      }
+    },
   },
 });
 
@@ -65,6 +89,7 @@ export const {
   setFilter,
   setSort,
   reorderTasks,
+  moveTaskBetweenColumns,
 } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
