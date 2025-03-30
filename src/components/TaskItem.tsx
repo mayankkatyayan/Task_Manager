@@ -28,9 +28,10 @@ interface TaskItemProps {
   task: Task;
   index: number;
   onEdit: () => void;
+  isDraggable?: boolean;
 }
 
-const TaskItem = ({ task, index, onEdit }: TaskItemProps) => {
+const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) => {
   const { removeTask, markTaskComplete } = useTaskManagement();
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -66,7 +67,7 @@ const TaskItem = ({ task, index, onEdit }: TaskItemProps) => {
   };
 
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={task.id} index={index} isDragDisabled={!isDraggable}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -76,8 +77,8 @@ const TaskItem = ({ task, index, onEdit }: TaskItemProps) => {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
-                <div className="p-1 cursor-grab" {...provided.dragHandleProps}>
-                  <GripVertical className="h-5 w-5 text-muted-foreground" />
+                <div className={`p-1 ${isDraggable ? 'cursor-grab' : 'cursor-not-allowed'}`} {...provided.dragHandleProps}>
+                  <GripVertical className={`h-5 w-5 ${isDraggable ? 'text-muted-foreground' : 'text-muted-foreground/30'}`} />
                 </div>
                 
                 <div className="flex-1">

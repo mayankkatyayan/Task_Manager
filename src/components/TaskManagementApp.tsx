@@ -28,6 +28,16 @@ const TaskManagementApp = () => {
       return;
     } 
     
+    // Only allow drag between "todo" and "completed" columns
+    const validDragPair = (
+      (source.droppableId === 'todo' && destination.droppableId === 'completed') ||
+      (source.droppableId === 'completed' && destination.droppableId === 'todo')
+    );
+
+    if (!validDragPair) {
+      return; // Prevent dragging to/from "in-progress"
+    }
+    
     // Task moved to a different column
     moveTaskToColumn(
       draggableId,

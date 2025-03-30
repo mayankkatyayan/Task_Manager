@@ -13,9 +13,12 @@ interface TaskListProps {
 }
 
 const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
+  // Check if this column supports drag and drop
+  const isDraggableColumn = droppableId === 'todo' || droppableId === 'completed';
+  
   if (tasks.length === 0) {
     return (
-      <div className="border rounded-lg p-4 bg-background h-full min-h-[200px]">
+      <div className={`border rounded-lg p-4 bg-background h-full min-h-[200px] ${isDraggableColumn ? 'border-dotted border-2' : ''}`}>
         <div className="font-medium text-lg mb-4 text-center">{title}</div>
         <Alert>
           <AlertCircle className="h-4 w-4" />
@@ -29,9 +32,9 @@ const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
   }
 
   return (
-    <div className="border rounded-lg p-4 bg-background h-full min-h-[200px]">
+    <div className={`border rounded-lg p-4 bg-background h-full min-h-[200px] ${isDraggableColumn ? 'border-dotted border-2' : ''}`}>
       <div className="font-medium text-lg mb-4 text-center">{title}</div>
-      <Droppable droppableId={droppableId}>
+      <Droppable droppableId={droppableId} isDropDisabled={!isDraggableColumn}>
         {(provided) => (
           <div
             {...provided.droppableProps}
@@ -44,6 +47,7 @@ const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
                 task={task} 
                 index={index}
                 onEdit={() => onEditTask(task)} 
+                isDraggable={isDraggableColumn}
               />
             ))}
             {provided.placeholder}
