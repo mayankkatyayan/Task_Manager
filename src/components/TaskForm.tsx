@@ -95,7 +95,10 @@ const TaskForm = ({ onClose, editTask }: TaskFormProps) => {
       });
     } else {
       createTask({
-        ...data,
+        title: data.title,
+        description: data.description || "",
+        status: data.status,
+        priority: data.priority,
         dueDate: data.dueDate ? data.dueDate.toISOString() : null,
       });
       toast({
