@@ -2,32 +2,26 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import ContactPage from "./pages/ContactPage";
-import NotFound from "./pages/NotFound";
-import MainLayout from "./layouts/MainLayout";
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import TaskManagementApp from './components/TaskManagementApp';
+import { ThemeProvider } from './context/ThemeContext';
+import './App.css';
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <MainLayout>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/contact" element={<ContactPage />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </MainLayout>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  return (
+    <Provider store={store}>
+      <ThemeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <div className="min-h-screen bg-background">
+            <TaskManagementApp />
+          </div>
+        </TooltipProvider>
+      </ThemeProvider>
+    </Provider>
+  );
+};
 
 export default App;
