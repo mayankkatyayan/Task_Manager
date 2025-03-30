@@ -1,7 +1,7 @@
 
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import TaskItem from './TaskItem';
-import { Task } from '../types/task';
+import { Task, TaskStatus } from '../types/task';
 import { AlertCircle } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 

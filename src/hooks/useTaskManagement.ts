@@ -19,11 +19,16 @@ export const useTaskManagement = () => {
   const { tasks, filter, sort } = useSelector((state: RootState) => state.tasks);
   
   const createTask = useCallback((taskData: Omit<Task, 'id' | 'createdAt' | 'completedAt'>) => {
+    // Ensure all required fields are present
     const newTask: Task = {
       id: uuidv4(),
+      title: taskData.title,
+      description: taskData.description,
+      status: taskData.status,
+      priority: taskData.priority,
       createdAt: new Date().toISOString(),
       completedAt: null,
-      ...taskData,
+      dueDate: taskData.dueDate
     };
     dispatch(addTask(newTask));
   }, [dispatch]);

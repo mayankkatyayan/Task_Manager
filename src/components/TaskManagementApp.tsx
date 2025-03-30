@@ -12,10 +12,12 @@ import { PlusIcon } from 'lucide-react';
 const TaskManagementApp = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const { tasks, moveTask } = useTaskManagement();
+  const { tasks, moveTask, markTaskComplete } = useTaskManagement();
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
+    
+    // Handle moving task within the list
     moveTask(result.source.index, result.destination.index);
   };
 
