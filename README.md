@@ -42,5 +42,5 @@ A simple task manager built with React.js, featuring CRUD operations, filters, s
 ## Contact
 **Author:** Mayank  
 **GitHub:** [github.com/your-github-id](https://github.com/mayankkatyayan)  
-**LinkedIn:** [linkedin.com/in/your-linkedin-id]((https://www.linkedin.com/in/mayankkat/))
+**LinkedIn:** [linkedin.com/in/your-linkedin-id](https://www.linkedin.com/in/mayankkat/)
 
