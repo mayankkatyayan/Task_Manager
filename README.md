@@ -1,13 +1,46 @@
+# Task Management App
 
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Overview
+A simple task manager built with React.js, featuring CRUD operations, filters, sorting, and drag-and-drop functionality.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Features
+- Create, edit, delete, and complete tasks
+- Filter and sort by status, date, and priority
+- Drag and drop for task organization
+- Responsive design (mobile & desktop)
+- State management with Redux
+- Data stored in localStorage
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Tech Stack
+- **Frontend**: React.js, Redux, Material UI
+- **Storage**: localStorage
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Setup
+1. Clone the repo:
+   ```sh
+   git clone https://github.com/your-username/task-manager.git
+   cd task-manager
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Run the app:
+   ```sh
+   npm start
+   ```
+4. Open: `http://localhost:3000`
+
+## Deployment
+- **Netlify/Vercel:** Push to GitHub and deploy via dashboard.
+- **Vercel CLI:**
+   ```sh
+   npm install -g vercel
+   vercel
+   ```
+
+## Contact
+**Author:** Mayank  
+**GitHub:** [github.com/your-github-id](https://github.com/mayankkatyayan)  
+**LinkedIn:** [linkedin.com/in/your-linkedin-id]((https://www.linkedin.com/in/mayankkat/))
+
