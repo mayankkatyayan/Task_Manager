@@ -22,13 +22,12 @@ const TaskManagementApp = () => {
     
     // If the task was dropped within the same column
     if (source.droppableId === destination.droppableId) {
-      // Handle reordering within the same status column
       // This is a simplified version as we're not actually reordering within status groups
-      // in our current state management approach
       return;
     } 
     
-    // Task moved to a different column
+    // Task moved to a different column (todo <-> completed)
+    const newStatus = destination.droppableId as 'todo' | 'completed';
     moveTaskToColumn(
       draggableId,
       source.droppableId,

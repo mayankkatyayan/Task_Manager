@@ -19,23 +19,6 @@ const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
     return 'border-green-400'; // completed
   };
   
-  if (tasks.length === 0) {
-    return (
-      <div className={`border ${getColumnColor()} rounded-lg p-4 bg-background h-full min-h-[200px] border-dotted border-2`}>
-        <div className={`font-medium text-lg mb-4 text-center ${droppableId === 'todo' ? 'text-blue-600' : 'text-green-600'}`}>
-          {title}
-        </div>
-        <Alert>
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>No tasks</AlertTitle>
-          <AlertDescription>
-            No tasks in this column yet.
-          </AlertDescription>
-        </Alert>
-      </div>
-    );
-  }
-
   return (
     <div className={`border ${getColumnColor()} rounded-lg p-4 bg-background h-full min-h-[200px] border-dotted border-2`}>
       <div className={`font-medium text-lg mb-4 text-center ${droppableId === 'todo' ? 'text-blue-600' : 'text-green-600'}`}>
@@ -48,15 +31,25 @@ const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
             ref={provided.innerRef}
             className="space-y-3 min-h-[150px]"
           >
-            {tasks.map((task, index) => (
-              <TaskItem 
-                key={task.id} 
-                task={task} 
-                index={index}
-                onEdit={() => onEditTask(task)} 
-                isDraggable={true}
-              />
-            ))}
+            {tasks.length === 0 ? (
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>No tasks</AlertTitle>
+                <AlertDescription>
+                  No tasks in this column yet.
+                </AlertDescription>
+              </Alert>
+            ) : (
+              tasks.map((task, index) => (
+                <TaskItem 
+                  key={task.id} 
+                  task={task} 
+                  index={index}
+                  onEdit={() => onEditTask(task)} 
+                  isDraggable={true}
+                />
+              ))
+            )}
             {provided.placeholder}
           </div>
         )}

@@ -10,7 +10,8 @@ import {
   Clock,
   MoreVertical,
   Pencil, 
-  Trash2 
+  Trash2,
+  GripVertical
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -70,10 +71,12 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           className={`transition-all ${snapshot.isDragging ? 'opacity-70 shadow-lg scale-105' : ''} ${task.status === 'completed' ? 'opacity-85' : ''}`}
         >
-          <Card className={`${snapshot.isDragging ? 'border-primary' : 'hover:border-primary/50'} transition-all cursor-grab active:cursor-grabbing`}>
+          <Card className={`${snapshot.isDragging ? 'border-primary' : 'hover:border-primary/50'} transition-all`}>
+            <div {...provided.dragHandleProps} className="h-2 w-full bg-muted hover:bg-muted/80 cursor-grab active:cursor-grabbing flex justify-center items-center">
+              <GripVertical className="h-4 w-4 text-muted-foreground" />
+            </div>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
                 <div className="flex-1">
