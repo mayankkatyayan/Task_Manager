@@ -7,8 +7,7 @@ import { useTaskManagement } from '../hooks/useTaskManagement';
 import { 
   Calendar, 
   CheckCircle, 
-  Clock, 
-  GripVertical, 
+  Clock,
   MoreVertical,
   Pencil, 
   Trash2 
@@ -44,7 +43,6 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
 
   const statusColors = {
     todo: "bg-blue-500/80 hover:bg-blue-500",
-    'in-progress': "bg-purple-500/80 hover:bg-purple-500",
     completed: "bg-green-500/80 hover:bg-green-500"
   };
 
@@ -72,18 +70,12 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
+          {...provided.dragHandleProps}
           className={`transition-all ${snapshot.isDragging ? 'opacity-70 shadow-lg scale-105' : ''} ${task.status === 'completed' ? 'opacity-85' : ''}`}
         >
-          <Card className={`${snapshot.isDragging ? 'border-primary' : 'hover:border-primary/50'} transition-all`}>
+          <Card className={`${snapshot.isDragging ? 'border-primary' : 'hover:border-primary/50'} transition-all cursor-grab active:cursor-grabbing`}>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
-                <div 
-                  className={`p-1 ${isDraggable ? 'cursor-grab active:cursor-grabbing' : 'cursor-not-allowed'}`} 
-                  {...provided.dragHandleProps}
-                >
-                  <GripVertical className={`h-5 w-5 ${isDraggable ? 'text-primary' : 'text-muted-foreground/30'}`} />
-                </div>
-                
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <h3 className={`font-medium text-lg ${task.status === 'completed' ? 'line-through text-muted-foreground' : ''}`}>
@@ -115,7 +107,7 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
                   
                   <div className="flex flex-wrap gap-2 mt-2">
                     <Badge variant="secondary" className={`${statusColors[task.status]} text-white`}>
-                      {task.status === 'in-progress' ? 'In Progress' : task.status.charAt(0).toUpperCase() + task.status.slice(1)}
+                      {task.status.charAt(0).toUpperCase() + task.status.slice(1)}
                     </Badge>
                     <Badge variant="outline" className={`${priorityColors[task.priority]} text-white`}>
                       {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority

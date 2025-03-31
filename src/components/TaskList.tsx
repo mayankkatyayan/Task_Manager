@@ -1,7 +1,7 @@
 
 import { Droppable } from 'react-beautiful-dnd';
 import TaskItem from './TaskItem';
-import { Task, TaskStatus } from '../types/task';
+import { Task } from '../types/task';
 import { AlertCircle } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
@@ -13,20 +13,16 @@ interface TaskListProps {
 }
 
 const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
-  // Check if this column supports drag and drop
-  const isDraggableColumn = droppableId === 'todo' || droppableId === 'completed';
-  
   // Define column colors based on status
   const getColumnColor = () => {
     if (droppableId === 'todo') return 'border-blue-400';
-    if (droppableId === 'completed') return 'border-green-400';
-    return 'border-purple-400'; // in-progress
+    return 'border-green-400'; // completed
   };
   
   if (tasks.length === 0) {
     return (
-      <div className={`border ${getColumnColor()} rounded-lg p-4 bg-background h-full min-h-[200px] ${isDraggableColumn ? 'border-dotted border-2' : ''}`}>
-        <div className={`font-medium text-lg mb-4 text-center ${droppableId === 'todo' ? 'text-blue-600' : droppableId === 'completed' ? 'text-green-600' : 'text-purple-600'}`}>
+      <div className={`border ${getColumnColor()} rounded-lg p-4 bg-background h-full min-h-[200px] border-dotted border-2`}>
+        <div className={`font-medium text-lg mb-4 text-center ${droppableId === 'todo' ? 'text-blue-600' : 'text-green-600'}`}>
           {title}
         </div>
         <Alert>
@@ -41,11 +37,11 @@ const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
   }
 
   return (
-    <div className={`border ${getColumnColor()} rounded-lg p-4 bg-background h-full min-h-[200px] ${isDraggableColumn ? 'border-dotted border-2' : ''}`}>
-      <div className={`font-medium text-lg mb-4 text-center ${droppableId === 'todo' ? 'text-blue-600' : droppableId === 'completed' ? 'text-green-600' : 'text-purple-600'}`}>
+    <div className={`border ${getColumnColor()} rounded-lg p-4 bg-background h-full min-h-[200px] border-dotted border-2`}>
+      <div className={`font-medium text-lg mb-4 text-center ${droppableId === 'todo' ? 'text-blue-600' : 'text-green-600'}`}>
         {title}
       </div>
-      <Droppable droppableId={droppableId} isDropDisabled={!isDraggableColumn}>
+      <Droppable droppableId={droppableId}>
         {(provided) => (
           <div
             {...provided.droppableProps}
@@ -58,7 +54,7 @@ const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
                 task={task} 
                 index={index}
                 onEdit={() => onEditTask(task)} 
-                isDraggable={isDraggableColumn}
+                isDraggable={true}
               />
             ))}
             {provided.placeholder}

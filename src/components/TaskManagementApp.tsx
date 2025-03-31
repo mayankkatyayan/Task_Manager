@@ -12,7 +12,7 @@ import { PlusIcon } from 'lucide-react';
 const TaskManagementApp = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const { todoTasks, inProgressTasks, completedTasks, moveTaskToColumn } = useTaskManagement();
+  const { todoTasks, completedTasks, moveTaskToColumn } = useTaskManagement();
 
   const handleDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result;
@@ -27,16 +27,6 @@ const TaskManagementApp = () => {
       // in our current state management approach
       return;
     } 
-    
-    // Only allow drag between "todo" and "completed" columns
-    const validDragPair = (
-      (source.droppableId === 'todo' && destination.droppableId === 'completed') ||
-      (source.droppableId === 'completed' && destination.droppableId === 'todo')
-    );
-
-    if (!validDragPair) {
-      return; // Prevent dragging to/from "in-progress"
-    }
     
     // Task moved to a different column
     moveTaskToColumn(
@@ -74,18 +64,12 @@ const TaskManagementApp = () => {
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <TaskList 
             tasks={todoTasks} 
             onEditTask={handleEditTask} 
             droppableId="todo" 
             title="To Do" 
-          />
-          <TaskList 
-            tasks={inProgressTasks} 
-            onEditTask={handleEditTask} 
-            droppableId="in-progress" 
-            title="In Progress" 
           />
           <TaskList 
             tasks={completedTasks} 

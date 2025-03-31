@@ -66,7 +66,7 @@ export const useTaskManagement = () => {
   
   const moveTaskToColumn = useCallback((taskId: string, sourceDroppableId: string, sourceIndex: number, 
     destinationDroppableId: string, destinationIndex: number) => {
-    // Extract the status from the droppable ID (e.g., 'todo', 'in-progress', 'completed')
+    // Extract the status from the droppable ID (e.g., 'todo', 'completed')
     const newStatus = destinationDroppableId as TaskStatus;
     
     dispatch(moveTaskBetweenColumns({
@@ -79,7 +79,6 @@ export const useTaskManagement = () => {
   
   // Organize tasks by status for kanban view
   const todoTasks = tasks.filter(task => task.status === 'todo');
-  const inProgressTasks = tasks.filter(task => task.status === 'in-progress');
   const completedTasks = tasks.filter(task => task.status === 'completed');
   
   // Filter and sort tasks
@@ -110,7 +109,6 @@ export const useTaskManagement = () => {
   return {
     tasks: filteredAndSortedTasks,
     todoTasks,
-    inProgressTasks,
     completedTasks,
     filter,
     sort,
