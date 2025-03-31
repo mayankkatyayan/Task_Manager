@@ -16,10 +16,19 @@ const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
   // Check if this column supports drag and drop
   const isDraggableColumn = droppableId === 'todo' || droppableId === 'completed';
   
+  // Define column colors based on status
+  const getColumnColor = () => {
+    if (droppableId === 'todo') return 'border-blue-400';
+    if (droppableId === 'completed') return 'border-green-400';
+    return 'border-purple-400'; // in-progress
+  };
+  
   if (tasks.length === 0) {
     return (
-      <div className={`border rounded-lg p-4 bg-background h-full min-h-[200px] ${isDraggableColumn ? 'border-dotted border-2' : ''}`}>
-        <div className="font-medium text-lg mb-4 text-center">{title}</div>
+      <div className={`border ${getColumnColor()} rounded-lg p-4 bg-background h-full min-h-[200px] ${isDraggableColumn ? 'border-dotted border-2' : ''}`}>
+        <div className={`font-medium text-lg mb-4 text-center ${droppableId === 'todo' ? 'text-blue-600' : droppableId === 'completed' ? 'text-green-600' : 'text-purple-600'}`}>
+          {title}
+        </div>
         <Alert>
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No tasks</AlertTitle>
@@ -32,8 +41,10 @@ const TaskList = ({ tasks, onEditTask, droppableId, title }: TaskListProps) => {
   }
 
   return (
-    <div className={`border rounded-lg p-4 bg-background h-full min-h-[200px] ${isDraggableColumn ? 'border-dotted border-2' : ''}`}>
-      <div className="font-medium text-lg mb-4 text-center">{title}</div>
+    <div className={`border ${getColumnColor()} rounded-lg p-4 bg-background h-full min-h-[200px] ${isDraggableColumn ? 'border-dotted border-2' : ''}`}>
+      <div className={`font-medium text-lg mb-4 text-center ${droppableId === 'todo' ? 'text-blue-600' : droppableId === 'completed' ? 'text-green-600' : 'text-purple-600'}`}>
+        {title}
+      </div>
       <Droppable droppableId={droppableId} isDropDisabled={!isDraggableColumn}>
         {(provided) => (
           <div

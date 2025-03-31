@@ -37,15 +37,15 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
   const [isExpanded, setIsExpanded] = useState(false);
 
   const priorityColors = {
-    low: "bg-blue-500",
-    medium: "bg-yellow-500",
-    high: "bg-red-500"
+    low: "bg-blue-500/80 hover:bg-blue-500",
+    medium: "bg-yellow-500/80 hover:bg-yellow-500",
+    high: "bg-red-500/80 hover:bg-red-500"
   };
 
   const statusColors = {
-    todo: "bg-slate-500",
-    'in-progress': "bg-purple-500",
-    completed: "bg-green-500"
+    todo: "bg-blue-500/80 hover:bg-blue-500",
+    'in-progress': "bg-purple-500/80 hover:bg-purple-500",
+    completed: "bg-green-500/80 hover:bg-green-500"
   };
 
   const handleDelete = () => {
@@ -72,13 +72,16 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          className={`transition-all ${snapshot.isDragging ? 'opacity-70 shadow-lg' : ''} ${task.status === 'completed' ? 'opacity-75' : ''}`}
+          className={`transition-all ${snapshot.isDragging ? 'opacity-70 shadow-lg scale-105' : ''} ${task.status === 'completed' ? 'opacity-85' : ''}`}
         >
-          <Card>
+          <Card className={`${snapshot.isDragging ? 'border-primary' : 'hover:border-primary/50'} transition-all`}>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
-                <div className={`p-1 ${isDraggable ? 'cursor-grab' : 'cursor-not-allowed'}`} {...provided.dragHandleProps}>
-                  <GripVertical className={`h-5 w-5 ${isDraggable ? 'text-muted-foreground' : 'text-muted-foreground/30'}`} />
+                <div 
+                  className={`p-1 ${isDraggable ? 'cursor-grab active:cursor-grabbing' : 'cursor-not-allowed'}`} 
+                  {...provided.dragHandleProps}
+                >
+                  <GripVertical className={`h-5 w-5 ${isDraggable ? 'text-primary' : 'text-muted-foreground/30'}`} />
                 </div>
                 
                 <div className="flex-1">
@@ -93,16 +96,16 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
                           <span className="sr-only">Options</span>
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={onEdit}>
+                      <DropdownMenuContent align="end" className="bg-background border shadow-lg">
+                        <DropdownMenuItem onClick={onEdit} className="cursor-pointer hover:bg-accent">
                           <Pencil className="mr-2 h-4 w-4" />
                           <span>Edit</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleComplete} disabled={task.status === 'completed'}>
+                        <DropdownMenuItem onClick={handleComplete} disabled={task.status === 'completed'} className="cursor-pointer hover:bg-accent">
                           <CheckCircle className="mr-2 h-4 w-4" />
                           <span>Mark Complete</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive" onClick={handleDelete}>
+                        <DropdownMenuItem className="cursor-pointer text-destructive hover:bg-destructive/10" onClick={handleDelete}>
                           <Trash2 className="mr-2 h-4 w-4" />
                           <span>Delete</span>
                         </DropdownMenuItem>
@@ -111,10 +114,10 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
                   </div>
                   
                   <div className="flex flex-wrap gap-2 mt-2">
-                    <Badge variant="secondary" className={`${statusColors[task.status]}`}>
+                    <Badge variant="secondary" className={`${statusColors[task.status]} text-white`}>
                       {task.status === 'in-progress' ? 'In Progress' : task.status.charAt(0).toUpperCase() + task.status.slice(1)}
                     </Badge>
-                    <Badge variant="outline" className={priorityColors[task.priority]}>
+                    <Badge variant="outline" className={`${priorityColors[task.priority]} text-white`}>
                       {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority
                     </Badge>
                   </div>
@@ -122,7 +125,7 @@ const TaskItem = ({ task, index, onEdit, isDraggable = true }: TaskItemProps) =>
                   <div className="mt-3">
                     <Button 
                       variant="ghost" 
-                      className="p-0 h-auto text-muted-foreground text-sm" 
+                      className="p-0 h-auto text-muted-foreground text-sm hover:text-primary" 
                       onClick={() => setIsExpanded(!isExpanded)}
                     >
                       {isExpanded ? 'Show less' : 'Show more'}

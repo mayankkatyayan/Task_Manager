@@ -12,7 +12,7 @@ import { PlusIcon } from 'lucide-react';
 const TaskManagementApp = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const { todoTasks, inProgressTasks, completedTasks, moveTask, moveTaskToColumn } = useTaskManagement();
+  const { todoTasks, inProgressTasks, completedTasks, moveTaskToColumn } = useTaskManagement();
 
   const handleDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result;
@@ -60,21 +60,21 @@ const TaskManagementApp = () => {
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <header className="mb-8">
+      <header className="mb-8 bg-gradient-to-r from-primary/20 to-primary/5 p-6 rounded-lg">
         <h1 className="text-3xl font-bold mb-2 text-foreground">Task Management</h1>
         <p className="text-muted-foreground">Organize, prioritize, and complete your tasks efficiently</p>
       </header>
 
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
         <TaskFilters />
-        <Button onClick={() => setIsFormOpen(true)} className="flex items-center gap-2">
+        <Button onClick={() => setIsFormOpen(true)} className="flex items-center gap-2 bg-primary hover:bg-primary/80">
           <PlusIcon className="h-4 w-4" />
           Add Task
         </Button>
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <TaskList 
             tasks={todoTasks} 
             onEditTask={handleEditTask} 
