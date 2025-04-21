@@ -1,4 +1,6 @@
 # Task Management App
+## Deployed Link
+Link : https://taskyyyy.netlify.app/ 
 
 ## Overview
 A simple task manager built with React.js, featuring CRUD operations, filters, sorting, and drag-and-drop functionality.
